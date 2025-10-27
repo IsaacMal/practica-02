@@ -35,6 +35,7 @@ def actualizar_tasas(ruta):
         tasas["actualizacion"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         archivo.seek(0)
         json.dump(tasas, archivo, indent=2)
+        archivo.truncate()
 
 # Ejemplo de uso
 if __name__ == "__main__":
