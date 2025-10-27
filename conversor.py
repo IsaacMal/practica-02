@@ -15,7 +15,8 @@ def convertir(precio_usd, moneda_destino, tasas):
     if not tasa:
         raise ValueError("Moneda no soportada")
     
-    return precio_usd * tasa
+    # Redondeamos el resultado de la conversión a 2 decimales
+    return round(precio_usd * tasa, 2)
 
 # Escribe una nueva línea en el archivo de registro
 def registrar_transaccion(producto, precio_convertido, moneda, ruta_log):
@@ -31,7 +32,8 @@ def actualizar_tasas(ruta):
     with open(ruta, "r+") as archivo:
         tasas = json.load(archivo)
         for moneda in tasas["USD"]:
-           tasas["USD"][moneda] *= 0.98 + (0.04 * random.random())
+            # Redondeamos las tasas a 2 decimales al ser actualizadas
+            tasas["USD"][moneda] = round(tasas["USD"][moneda] * (0.98 + (0.04 * random.random())), 2)
         tasas["actualizacion"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         archivo.seek(0)
         json.dump(tasas, archivo, indent=2)
